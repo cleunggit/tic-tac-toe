@@ -1,3 +1,5 @@
+window.addEventListener('DOMContentLoaded', init);
+
 /* ------- constants -------- */
 
 // create an array of winning combos
@@ -17,8 +19,6 @@ const winningCombos = [
 /* ------- app's state (variables) -------- */
 
 let board;
-// const player1 = "O";
-// const player2 = "X";
 let messages = document.querySelector('h2')
 let turn = "X";
 let win;
@@ -28,13 +28,12 @@ const cells = Array.from(document.querySelectorAll("#board div"))
 
 /* ------- event listeners -------- */
 
-document.getElementById('board').addEventListener('click', handleTurn)
-
 document.getElementById('reset').addEventListener('click', init)
 
 /* ------- functions -------- */
 function init() {
     board = ['', '', '', '', '', '', '', '', '']; 
+    document.getElementById('board').addEventListener('click', handleTurn)
     renderBoard()
 }
 
@@ -50,13 +49,14 @@ function renderBoard() {
 }
 
 function handleTurn(event) {
-    let idx = cells.findIndex( cell => {
+    let idx = cells.findIndex( cell => { 
         return cell === event.target
     })
+    console.log("EVENT", event)
+    console.log("IDX===>", idx)
     if (board[idx] == "") {
         board[idx] = turn
         turn = turn === 'X' ? 'O' : 'X'
-    // console.log(board)
         win = getWinner()
         renderBoard()
     }
